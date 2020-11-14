@@ -1,20 +1,26 @@
 # Assignment 1: RTP & RTSP
 
-Usage:
+## Team Member
+1. Trương Công Thành - 1810766
+2. Trần Thanh Bình - 1810689
+3. Nguyễn Thanh Hiên - 1810913
+4. Võ Quý Giang - 1810913
 
-Open terminal:
+## Usage:
+
+### Open terminal:
 
     python Server.py Server_port
 
-Where:
+### Where:
 
     # Server_port must be a number > 1024.
 
-Open another terminal:
+### Open another terminal:
 
     python ClientLauncher.py Server_name Server_port RTP_port video_file
 
-Where: 
+### Where: 
 
     # Server_name is the IP address of your computer.
 
