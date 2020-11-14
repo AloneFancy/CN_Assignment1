@@ -4,7 +4,7 @@
 1. Trương Công Thành - 1810766
 2. Trần Thanh Bình - 1810689
 3. Nguyễn Thanh Hiên - 1810913
-4. Võ Quý Giang - 1810913
+4. Võ Quý Giang - 1711130
 
 ## Usage:
 
