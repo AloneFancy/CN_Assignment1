@@ -1,5 +1,5 @@
 from tkinter import *
-import tkinter.messagebox
+import tkinter.messagebox as tkMessageBox
 from PIL import Image, ImageTk
 import socket, threading, sys, traceback, os
 
@@ -74,7 +74,10 @@ class Client:
 		"""Teardown button handler."""
 		self.sendRtspRequest(self.TEARDOWN)		
 		self.master.destroy() # Close the gui window
-		os.remove(CACHE_FILE_NAME + str(self.sessionId) + CACHE_FILE_EXT) # Delete the cache image from video
+		try:
+			os.remove(CACHE_FILE_NAME + str(self.sessionId) + CACHE_FILE_EXT) # Delete the cache image from video
+		except FileNotFoundError:
+			pass
 
 	def pauseMovie(self):
 		"""Pause button handler."""
@@ -147,13 +150,14 @@ class Client:
 		#-------------
 		
 		# Setup request
+		request = ""
 		if requestCode == self.SETUP and self.state == self.INIT:
 			threading.Thread(target=self.recvRtspReply).start()
 			# Update RTSP sequence number.
 			self.rtspSeq = 1
 
 			# Write the RTSP request to be sent.
-			request = "SETUP " + str(self.filename) + " RTSP/2.0"
+			request = "SETUP " + str(self.fileName) + " RTSP/2.0"
 			request += "\nCseq: " + str(self.rtspSeq)
 			request += "\nTransport: RTP/UDP; client_port = " + str(self.rtpPort)
 			
@@ -202,7 +206,7 @@ class Client:
 			return
 		
 		# Send the RTSP request using rtspSocket.
-		self.rtspSocket.send(request)
+		self.rtspSocket.send(request.encode('utf-8'))
 		
 		print('\nData sent:\n' + request)
 	
