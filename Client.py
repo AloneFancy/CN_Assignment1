@@ -159,7 +159,7 @@ class Client:
 			# Write the RTSP request to be sent.
 			request = "SETUP " + str(self.fileName) + " RTSP/2.0"
 			request += "\nCseq: " + str(self.rtspSeq)
-			request += "\nTransport: RTP/UDP; client_port = " + str(self.rtpPort)
+			request += "\nTransport: RTP/UDP; client_port= " + str(self.rtpPort)
 			
 			# Keep track of the sent request.
 			self.requestSent = self.SETUP
