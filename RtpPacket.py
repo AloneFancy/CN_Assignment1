@@ -35,7 +35,6 @@ class RtpPacket:
 		self.header = header
 
 		# Get the payload from the argument
-		# self.payload = ...
 		self.payload = payload
 		
 	def decode(self, byteStream):
