@@ -32,6 +32,7 @@ class RtpPacket:
 		header[9] = (ssrc >> 16) & 255
 		header[10] = (ssrc >> 8) & 255
 		header[11] = ssrc & 255
+		self.header = header
 
 		# Get the payload from the argument
 		# self.payload = ...
