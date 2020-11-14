@@ -85,6 +85,11 @@ class ServerWorker:
 				self.clientInfo['event'] = threading.Event()
 				self.clientInfo['worker']= threading.Thread(target=self.sendRtp) 
 				self.clientInfo['worker'].start()
+			
+			# Process RESUME request
+			elif self.state == self.PAUSE:
+					print("processing RESUME\n")
+					self.state = self.PLAYING
 		
 		# Process PAUSE request
 		elif requestType == self.PAUSE:
