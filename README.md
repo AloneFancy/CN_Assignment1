@@ -14,7 +14,7 @@
 
 ### Where:
 
-    # Server_port must be a number > 1024.
+    # Server_port is a number greater than 1024.
 
 ### Open another terminal:
 
@@ -28,4 +28,4 @@
 
     # RTP_port is 5008 by default.
 
-    # video_file your video file.
+    # video_file is the video file you want to stream.
