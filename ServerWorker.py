@@ -11,8 +11,10 @@ class ServerWorker:
 	TEARDOWN = 'TEARDOWN'
 	
 	INIT = 0
-	READY = 1
+	READY = 1	
 	PLAYING = 2
+	PAUSE_STATE = 3
+	
 	state = INIT
 
 	OK_200 = 0
@@ -72,6 +74,12 @@ class ServerWorker:
 		
 		# Process PLAY request 		
 		elif requestType == self.PLAY:
+			state = "?"
+			if self.state == self.READY:
+				state = "READY"
+			elif self.state == self.PAUSE_STATE:
+				state = "PAUSING"
+			print("Previous state is: " + state)
 			if self.state == self.READY:
 				print("processing PLAY\n")
 				self.state = self.PLAYING
@@ -87,15 +95,26 @@ class ServerWorker:
 				self.clientInfo['worker'].start()
 			
 			# Process RESUME request
-			elif self.state == self.PAUSE:
+			elif self.state == self.PAUSE_STATE:
 					print("processing RESUME\n")
 					self.state = self.PLAYING
+
+						# Create a new socket for RTP/UDP
+					self.clientInfo["rtpSocket"] = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+					
+					self.replyRtsp(self.OK_200, seq[1])
+					
+					# Create a new thread and start sending RTP packets
+					self.clientInfo['event'] = threading.Event()
+					self.clientInfo['worker']= threading.Thread(target=self.sendRtp) 
+					self.clientInfo['worker'].start()
+			
 		
 		# Process PAUSE request
 		elif requestType == self.PAUSE:
 			if self.state == self.PLAYING:
 				print("processing PAUSE\n")
-				self.state = self.READY
+				self.state = self.PAUSE_STATE
 				
 				self.clientInfo['event'].set()
 			
